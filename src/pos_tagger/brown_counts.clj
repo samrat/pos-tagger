@@ -11,10 +11,11 @@
 (defn separate-word-tag
   "Separate the word from its tag"
   [word-tag]
-  (let [split (str/split word-tag #"/")
-        word (apply str (butlast split))
-        tag (last split)]
-    (str word " " tag)))
+  (let [rev (str/reverse word-tag)
+        rev-split (str/split rev #"/" 2)]
+    (when (= (count rev-split) 2)
+      (let [[w t] rev-split]
+        (str (str/reverse t) " " (str/reverse w))))))
 
 (defn format-sentence
   "One word/tag pair on each line"
