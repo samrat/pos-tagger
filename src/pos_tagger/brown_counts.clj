@@ -1,7 +1,6 @@
 (ns pos-tagger.brown-counts
   (:require [clojure.string :as str]))
 
-;; string -> [string]
 (defn line->vec
   "Splits a line into words."
   [l]
@@ -40,7 +39,7 @@
                     (file-seq (clojure.java.io/file "brown")))]
     (process-brown f out)))
 
-(comment (process-dir "brown" "h1/bar.txt"))
+(comment (process-dir "brown" "brown.train"))
 
 (defn read-train-file
   [train-file]
@@ -83,8 +82,8 @@
                          (apply str (interleave ngram (repeat " ")))
                          "\n"))))))
 
-(comment (write-word-tags "h1/bar.txt" "h1/bar.counts")
-         (write-ngrams "h1/bar.txt" "h1/bar.counts"))
+(comment (write-word-tags "brown.train" "brown.counts")
+         (write-ngrams "brown.train" "brown.counts"))
 
 (defn make-counts-file
   [brown-dir counts-file]
