@@ -12,7 +12,10 @@
 (defn separate-word-tag
   "Separate the word from its tag"
   [word-tag]
-  (str/replace word-tag #"/" " "))
+  (let [split (str/split word-tag #"/")
+        word (apply str (butlast split))
+        tag (last split)]
+    (str word " " tag)))
 
 (defn format-sentence
   "One word/tag pair on each line"
