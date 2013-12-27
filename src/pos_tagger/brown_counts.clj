@@ -40,11 +40,14 @@
 
 (defn read-train-file
   [train-file]
-  (map #(str/split % #" ")
-       (-> (slurp train-file)
-           (str/split #"\n"))))
+  (->> (str/split (slurp train-file) #"\n\n")
+       (map #(str/split % #"\n"))
+       (map (fn [sentence]
+              (map #(str/split % #"\s") sentence)))))
 
-(def word-tags (comp frequencies read-train-file))
+(defn word-tags
+  [train-file]
+  (frequencies (apply concat (read-train-file train-file))))
 
 (defn write-word-tags
   [train-file out]
@@ -56,7 +59,13 @@
 
 (defn ngrams
   [n train-file]
-  (frequencies (partition n 1 (map second (read-train-file train-file)))))
+  (->> (read-train-file train-file)
+       (map (fn [sentence]
+              (partition n 1 (remove nil?
+                                     (concat ["*" "*"]
+                                             (map second sentence))))))
+       (apply concat)
+       (frequencies)))
 
 (defn write-ngrams
   "Appends ngram counts to file. To be called after write-word-tags,
