@@ -58,7 +58,7 @@
   (with-open [wri (clojure.java.io/writer out)]
     (doseq [word (word-tags train-file)]
       (let [[[w t] c] word]
-        (when-not (empty? w)
+        (when-not (some empty? [w t])
           (.write wri (str c " WORDTAG " t " " w "\n")))))))
 
 (defn ngrams
