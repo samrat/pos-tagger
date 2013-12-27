@@ -36,7 +36,8 @@
 (defn process-dir
   "dir is the directory containing the Brown corpus"
   [dir out]
-  (doseq [f (drop 1 (file-seq (clojure.java.io/file dir)))]
+  (doseq [f (filter #(re-find #"c[a-z]\d{2}" (.getPath %))
+                    (file-seq (clojure.java.io/file "brown")))]
     (process-brown f out)))
 
 (comment (process-dir "brown" "h1/bar.txt"))
