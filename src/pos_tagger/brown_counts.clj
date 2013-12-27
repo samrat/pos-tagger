@@ -65,9 +65,10 @@
   (with-open [wri (clojure.java.io/writer out :append true)]
     (doseq [n [1 2 3]
             [ngram c] (ngrams n train-file)]
-      (.write wri (str c " " n "-GRAM "
-                       (apply str (interleave ngram (repeat " ")))
-                       "\n")))))
+      (when (every? #(not (empty? %)) ngram)
+        (.write wri (str c " " n "-GRAM "
+                         (apply str (interleave ngram (repeat " ")))
+                         "\n"))))))
 
 (comment (write-word-tags "h1/bar.txt" "h1/bar.counts")
          (write-ngrams "h1/bar.txt" "h1/bar.counts"))
