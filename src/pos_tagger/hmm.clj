@@ -37,30 +37,25 @@
           (apply + (vals (word-tag-count tag))))
        (catch Exception _ 0)))
 
-(defn state-seq-probability
-  "Probability of state sequence given observation sequence
-  i.e. P(tags|sentence)"
-  [tag-seq sentence]
-  (let [tag-seq (concat ["*" "*"] tag-seq) ;; * * is the start sequence
-        trigrams (partition 3 1 tag-seq)]
-    (* (apply * (map transition-probability trigrams))
-       (apply * (map emission-probability (map vector
-                                               (drop 2 tag-seq) ;; *'s
-                                               sentence))))))
+(def viterbi
+  "Returns the probability of the most likely tag sequence upto posn."
+  (memoize
+   (fn [sentence tag posn]
+     (if (= posn 1)
+       (* (emission-probability [tag (first sentence)])
+          (transition-probability ["*" tag]))
+       (* (emission-probability [tag (nth sentence (dec posn))])
+          (apply max (map (fn [prev-tag]
+                            (* (transition-probability [prev-tag tag])
+                               (viterbi sentence prev-tag (dec posn))))
+                          tag-space)))))))
 
-(defn viterbi
-  [sentence tag posn]
-  (if (= posn 1)
-    (* (emission-probability [tag (first sentence)])
-       (transition-probability ["*" tag]))
-    (* (emission-probability [tag (nth sentence (dec posn))])
-       (apply max (map (fn [prev-tag]
-                   (* (transition-probability [prev-tag tag])
-                      (viterbi sentence prev-tag (dec posn))))
-                       tag-space)))))
-
-(defn viterbi-path
+(defn viterbi-tag
+  "Return the most likely tag for word at posn."
   [sentence posn]
-  (if (= posn (dec (count sentence)))
-    (apply max-key (fn [tag] (viterbi sentence tag posn)) tag-space)
-    ))
+  (apply max-key (fn [tag] (viterbi sentence tag posn)) tag-space))
+
+(defn tag-sequence
+  [sentence]
+  (map (partial viterbi-tag sentence)
+       (range 1 (inc (count sentence)))))
