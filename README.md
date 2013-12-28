@@ -41,6 +41,12 @@ Then,
     (tag-sequence ["the" "man" "saw" "a" "dog" "."])
     ;; ("at" "nn" "vbd" "at" "nn" ".")
 
+## TODO
+* Tokenizer
+* Account for rare words, proper nouns, typos.(smoothing)
+* Try a trigram language model.
+* Evaluate performance.
+
 ## License
 
 Copyright © 2013 [Samrat Man Singh](http://samrat.me)
