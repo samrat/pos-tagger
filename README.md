@@ -20,7 +20,8 @@ The first line means that the word "inward" is paired with the "jj"
 tag 2 times in the corpus.
 
 The second line means that the trigram(3-GRAM) ["cs" "dt" "nn"]
-appears 150 times in the corpus.
+appears 150 times in the corpus. There are also lines with counts for
+1- and 2-grams.
 
 The code used to produce `brown.counts` and `brown.train` files are in
 the `pos-tagger.brown-counts` namespace.
