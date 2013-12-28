@@ -67,7 +67,7 @@
   (->> (read-train-file train-file)
        (map (fn [sentence]
               (partition n 1 (remove nil?
-                                     (concat ["*" "*"]
+                                     (concat ["START" "START"]
                                              (map second sentence))))))
        (apply concat)
        (frequencies)))

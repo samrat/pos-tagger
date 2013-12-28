@@ -43,7 +43,7 @@
    (fn [sentence tag posn]
      (if (= posn 1)
        (* (emission-probability [tag (first sentence)])
-          (transition-probability ["*" tag]))
+          (transition-probability ["START" tag]))
        (* (emission-probability [tag (nth sentence (dec posn))])
           (apply max (map (fn [prev-tag]
                             (* (transition-probability [prev-tag tag])
