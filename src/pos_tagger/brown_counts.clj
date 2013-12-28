@@ -6,6 +6,7 @@
   [l]
   (-> l
       str/trim
+      str/lower-case
       (str/split #"\s")))
 
 (defn separate-word-tag
