@@ -2,8 +2,7 @@
 
 A parts-of-speech tagger using Hidden Markov Models and trained using the
 [Brown Corpus](http://nltk.googlecode.com/svn/trunk/nltk_data/packages/corpora/brown.zip)
-(.zip file). The tagset is described
-[here](http://www.comp.leeds.ac.uk/amalgam/tagsets/brown.html).
+(.zip file).
 
 This repository also contains the files containing processed data in
 the `brown.train` and `brown.counts` files. `brown.train` contains the
@@ -25,6 +24,9 @@ appears 150 times in the corpus. There are also lines with counts for
 
 The code used to produce `brown.counts` and `brown.train` files are in
 the `pos-tagger.brown-counts` namespace.
+
+The Brown corpus tagset is described
+[here](http://www.comp.leeds.ac.uk/amalgam/tagsets/brown.html).
 
 ## Usage
 
