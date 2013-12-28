@@ -12,7 +12,7 @@ First start a REPL inside the project dir:
 
 Then,
 
-    (require '[pos-tagger.hmm])
+    (require '[pos-tagger.hmm :refer :all])
 
     (tag-sequence ["the" "man" "saw" "a" "dog" "."])
     ;; ("at" "nn" "vbd" "at" "nn" ".")
